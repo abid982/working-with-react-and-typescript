@@ -15,7 +15,24 @@
 // We can either listen to every keystroke with useState, or we use a Ref to then get the user input once the form is submitted.
 
 import React from 'react';
+// Import useRef hook from react
+import { useRef } from 'react';
 const NewTodo = () => {
+  // Create a ref by calling useRef() hook
+  //   const todoTextInputRef = useRef();
+  // Add the angle bracket to explicitly set the concrete type of ref we wanna creates in this instance
+  // So now we are making it clear that the ref we're creating here will actually be connected to an HTMLInputElement.
+  // And we're getting this error because actually we have to set a default value here because this ref could already be a sign to some other element maybe, out of the box by default. And that's why we should provide a starting value here and at the beginning, we have no connection and therefore, the starting value is null.
+  //   const todoTextInputRef = useRef<HTMLInputElement>();
+  // With no initial value
+  const todoTextInputRef = useRef<HTMLInputElement>(null);
+
+  // For button
+  //   const todoTextInputRef = useRef<HTMLButtonElement>();
+  // For paragraph
+  //   const todoTextInputRef = useRef<HTMLParagraphElement>();
+  // mdn input
+
   // Form submit handler
   // Now we're getting red squiggly lines, because TypeScript has no idea which type of data this event thing will be.
   // We as a developer know that it will actually be such an event object which is emitted and passed automatically when we connect this function to the appropriate event listener.
@@ -33,13 +50,35 @@ const NewTodo = () => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+
+    //   Get the entered text by referring to the todoTextInputRef.current
+    //   'todoTextInputRef.current' is possibly 'null'.ts(18047)
+    // const enteredText = todoTextInputRef.current?.value;
+    //   Solution
+    //   const enteredText: string | undefined
+    // const enteredText = todoTextInputRef.current?.value;
+    // Will never be null 100% sure
+    //   Regular operators ?, ! (Generally important operators in TypeScript)
+    const enteredText = todoTextInputRef.current!.value;
+
+    //   Validtaing text entered by user
+    // if (enteredText?.trim().length === 0) {
+    if (enteredText.trim().length === 0) {
+      //   throw an error
+      return;
+    }
+
+    //   Communicate with App component
   };
 
   return (
     //   Connect form with handler
     <form onSubmit={submitHandler}>
       <label htmlFor="">Todo text</label>
-      <input type="text" id="text" />
+      {/* Connect ref to an input element or a textarea or something like this */}
+      {/* Set the special ref property and point at our ref in this case todoTextInputRef */}
+      {/* Hover over and we get an error ref is receiving the wrong type of data. */}
+      <input type="text" id="text" ref={todoTextInputRef} />
       <button>Add Todo</button>
     </form>
   );
