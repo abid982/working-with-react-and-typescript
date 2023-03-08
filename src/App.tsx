@@ -1,3 +1,4 @@
+import NewTodo from './components/NewTodo';
 import Todos from './components/Todos';
 import Todo from './models/todo';
 
@@ -6,8 +7,32 @@ function App() {
   // Array of Objects
   const todos = [new Todo('Learn JavaScript'), new Todo('Learn TypeScript')];
 
+  // Define function
+  // Now the shape of this function is that it shouldn't return anything. So not having a return statement here is fine but it should accept the parameter. It should get the actual todoText which should be a type of string.
+  const addTodoHandler = (text: string) => {
+    // Manipulate array
+    // State manage
+  };
+
   return (
     <div>
+      {/* Add NewTodo Component */}
+      {/* And ofcourse the todos array here should now be managed with the help of this NewTodo component. Whenever a new Todo is added there it should be added to this array here so that this array is not hard coded but dynamic. */}
+      {/* Couple of steps:
+        1. We need to use state to manage this array so this App component will rerender when this array changes.
+        2. And we need a way of communicating back from NewTodo into this App component.
+        // In NewTodo Component call a function which will be stored in App Component. We can pass pointers at functions to our components.
+      */}
+
+      {/* <NewTodo /> */}
+      {/* Error */}
+      {/* Property 'onAddTodo' is missing in type '{}' but required in type '{ onAddTodo: (text: string) => void; }'.ts(2741) */}
+
+      {/* Pass a function with proper structure/shape so define a functin in App.tsx */}
+      {/* Type '(text: number) => void' is not assignable to type '(text: string) => void'.
+       */}
+      <NewTodo onAddTodo={addTodoHandler} />
+
       {/* We're using this component in an incorrect way */}
       {/* <Todos /> */}
       {/* Property 'items' is missing in type '{}' but required in type '{ items: string[]; }'.ts(2741) */}
@@ -40,6 +65,4 @@ It would be unrealistic that every Todo is an object, an object with an ID maybe
 
 Describe our data model
 models folder
-
-
 */

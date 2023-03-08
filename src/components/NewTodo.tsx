@@ -17,7 +17,24 @@
 import React from 'react';
 // Import useRef hook from react
 import { useRef } from 'react';
-const NewTodo = () => {
+
+// Note: In NewTodo I want to get my props and then in submitHandler, I want to call props.onAddTodo for example
+// Error
+// 'props' is declared but its value is never read.ts(6133)
+// Parameter 'props' implicitly has an 'any' type.ts(7006)
+// I actually never clarify that NewTodo will be a functional component and we should absolutely do that.
+// const NewTodo = props => {
+// If we need custom props I should embrace that generic nature of this FC type to define my concrete props object definition of my own props which I wanna add in here that will be merged with the brace props.
+// The NewTodo component will actually get onAddTodo prop, which will be of type what? Well which will be a type of function and for this we define a function type in TypeScript.
+// const NewTodo: React.FC<{ onAddTodo: Function }> = props => {
+// Shape of function
+// When we call anything we're not doing anything with the return value, we're not storing it in constant, we're not outputting it so we don't need a return value here.
+// Hence we can set void as an expected return value
+// It is a function with no prameters but it gets one i.e enteredText so we need to update this function type definition up there.
+// const NewTodo: React.FC<{ onAddTodo: () => void }> = props => {
+// I wanna making it clear that onAddTodo will be a function and that's a function that returns nothing but takes one parameter which is of type string
+// If number it TypeScript gives us an error
+const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = props => {
   // Create a ref by calling useRef() hook
   //   const todoTextInputRef = useRef();
   // Add the angle bracket to explicitly set the concrete type of ref we wanna creates in this instance
@@ -69,6 +86,9 @@ const NewTodo = () => {
     }
 
     //   Communicate with App component
+    //   Pass pointer
+    //   Argument of type 'string' is not assignable to parameter of type 'number'.ts(2345)
+    props.onAddTodo(enteredText);
   };
 
   return (
