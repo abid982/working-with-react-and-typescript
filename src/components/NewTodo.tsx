@@ -17,6 +17,7 @@
 import React from 'react';
 // Import useRef hook from react
 import { useRef } from 'react';
+import classes from './NewTodo.module.css';
 
 // Note: In NewTodo I want to get my props and then in submitHandler, I want to call props.onAddTodo for example
 // Error
@@ -93,7 +94,7 @@ const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = props => {
 
   return (
     //   Connect form with handler
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className={classes.form}>
       <label htmlFor="">Todo text</label>
       {/* Connect ref to an input element or a textarea or something like this */}
       {/* Set the special ref property and point at our ref in this case todoTextInputRef */}

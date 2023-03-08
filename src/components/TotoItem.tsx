@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from './TodoItem.module.css';
 
 // 'props' is declared but its value is never read.ts(6133)Parameter 'props' implicitly has an 'any' type.ts(7006)
 
@@ -19,7 +20,7 @@ const TodoItem: React.FC<{ itemText: string }> = props => {
   //   return <li key={item.id}>{item.text}</li>;
   // Type '(props: { itemText: string; }) => void' is not assignable to type 'FC<{ itemText: string; }>'.
 
-  return <li>{props.itemText}</li>;
+  return <li className={classes.item}>{props.itemText}</li>;
 };
 
 export default TodoItem;
