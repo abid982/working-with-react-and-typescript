@@ -110,13 +110,23 @@ import classes from './Todos.module.css';
 // };
 
 // Items will be an array of type Todo
-const Todos: React.FC<{ items: Todo[] }> = props => {
+// We expect which is of type string
+const Todos: React.FC<{ items: Todo[]; onDeleteTodo: (id: string) => void }> = props => {
   return (
     <ul className={classes.todos}>
       {props.items.map(item => (
         // <li key={item.id}>{item.text}</li>
         // Type '{ key: string; itemText: string; }' is not assignable to type 'IntrinsicAttributes'. Property 'itemText' does not exist on type 'IntrinsicAttributes'.
-        <TodoItem key={item.id} itemText={item.text} />
+        // Property 'onRemoveTodo' is missing in type '{ key: string; itemText: string; }' but required in type '{ itemText: string; onRemoveTodo: () => void; }'.ts(2741)
+        // Pass on onRemoveTodo props
+        // Cannot find name 'todoRemoveHandler'.ts(2304)
+        // Autocompletion
+        <TodoItem
+          key={item.id}
+          itemText={item.text}
+          // Preconfigure a function for future execution
+          onRemoveTodo={props.onDeleteTodo.bind(null, item.id)}
+        />
         // Suggestion
         // Type '{ key: string; text: string; }' is not assignable to type 'IntrinsicAttributes & { itemText: string; }'.
         // <TodoItem key={item.id} text={item.text} />

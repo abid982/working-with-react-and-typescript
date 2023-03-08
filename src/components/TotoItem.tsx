@@ -16,11 +16,33 @@ import classes from './TodoItem.module.css';
 
 // When we create a new Functional Component, we learned that we sould add this React.FC type annotation
 // TodoItem is a React Functional Component by adding this type annotation
-const TodoItem: React.FC<{ itemText: string }> = props => {
+
+// Describe a function
+// Function doesn't return anything
+// We don't need argument
+const TodoItem: React.FC<{
+  itemText: string;
+  onRemoveTodo: () => void;
+}> = props => {
   //   return <li key={item.id}>{item.text}</li>;
   // Type '(props: { itemText: string; }) => void' is not assignable to type 'FC<{ itemText: string; }>'.
 
-  return <li className={classes.item}>{props.itemText}</li>;
+  // Todo delte handler
+  //   const delteHandler = (event: React.MouseEvent) => {
+  //     console.log(event.target);
+  //     console.log('Delete');
+  //   };
+
+  return (
+    //   Add click listener to list item
+    // Point at a function which we expect to get throug props
+    //   Triggers a function which is received through props
+    //   Property 'onRemoveTodo' does not exist on type '{ itemText: string; }'.ts(2339)
+    //   Didn't describe type definition
+    <li className={classes.item} onClick={props.onRemoveTodo}>
+      {props.itemText}
+    </li>
+  );
 };
 
 export default TodoItem;

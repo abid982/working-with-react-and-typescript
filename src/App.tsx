@@ -49,6 +49,20 @@ function App() {
     });
   };
 
+  // But this function definition is not correct
+  // In the end here I need some identification criteria and for Todos since every todo has a unique id
+  const removeTodoHandler = (todoId: string) => {
+    console.log('Todo remove handler');
+    // How would we know which todo to remove?
+    console.log('Todo Id:');
+    console.log(todoId);
+
+    // Update state
+    setTodos(prevTodos => {
+      return prevTodos.filter(todo => todo.id !== todoId);
+    });
+  };
+
   return (
     <div>
       {/* Add NewTodo Component */}
@@ -78,7 +92,10 @@ function App() {
       {/* PASS TODOS AS A VALUE TO THE ITEMS PROP TO THE TODO COMPONENT */}
       {/* Hover over items property */}
       {/* Type 'Todo' is not assignable to type 'string'. */}
-      <Todos items={todos} />
+
+      {/* Property 'onDeleteTodo' is missing in type '{ items: Todo[]; }' but required in type '{ items: Todo[]; onDeleteTodo: () => void; }'.ts(2741)
+       */}
+      <Todos items={todos} onDeleteTodo={removeTodoHandler} />
     </div>
   );
   /*
