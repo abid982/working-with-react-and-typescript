@@ -93,43 +93,40 @@ import React from 'react';
 // };
 
 // You can use a class name as a type
-import Todo from '../models/todo';
+import { useContext } from 'react';
+// import Todo from '../models/todo';
 import TodoItem from './TotoItem';
-// Import CSS
-import classes from './Todos.module.css';
-// Items is an array full of objects that fulfill the definition of this Todo class with an id property of type string and a text with type property
-// Objects created with this class as a constructor function
-// const Todos: React.FC<{ items: string[] }> = props => {
-//   return (
-//     <ul>
-//       {props.items.map(item => (
-//         <li key={item.id}>{item.text}</li>
-//       ))}
-//     </ul>
-//   );
-// };
 
-// Items will be an array of type Todo
-// We expect which is of type string
-const Todos: React.FC<{ items: Todo[]; onDeleteTodo: (id: string) => void }> = props => {
+// Named import
+// We're importing the context not the provider so that we can tap into that context here
+import { TodosContext } from './../store/todos-context';
+
+import classes from './Todos.module.css';
+
+const Todos: React.FC = () => {
+  // Call useContext
+  // const todosCtx: TodosContextObj
+  // When we hover over this constant we can see that it automatically knows the type of value that's managed by our context. Thanks to TypeScript and us linking everything correctively.
+  const todosCtx = useContext(TodosContext);
+
   return (
     <ul className={classes.todos}>
-      {props.items.map(item => (
-        // <li key={item.id}>{item.text}</li>
-        // Type '{ key: string; itemText: string; }' is not assignable to type 'IntrinsicAttributes'. Property 'itemText' does not exist on type 'IntrinsicAttributes'.
-        // Property 'onRemoveTodo' is missing in type '{ key: string; itemText: string; }' but required in type '{ itemText: string; onRemoveTodo: () => void; }'.ts(2741)
-        // Pass on onRemoveTodo props
-        // Cannot find name 'todoRemoveHandler'.ts(2304)
-        // Autocompletion
+      {/* {props.items.map(item => (
         <TodoItem
           key={item.id}
           itemText={item.text}
-          // Preconfigure a function for future execution
           onRemoveTodo={props.onDeleteTodo.bind(null, item.id)}
         />
-        // Suggestion
-        // Type '{ key: string; text: string; }' is not assignable to type 'IntrinsicAttributes & { itemText: string; }'.
-        // <TodoItem key={item.id} text={item.text} />
+      ))} */}
+      {/* Use  todosCtx to go through all todos context.items */}
+      {todosCtx.items.map(item => (
+        <TodoItem
+          key={item.id}
+          itemText={item.text}
+          // We'll still bind though because we still wann pre-configure this function to get the right ID evetually.
+          // We can get rig odff the props argument here and therefore we should also get rid off our own props type definitions here on React.FC because this todos componet doesn't use props anymore. Instead it uses context
+          onRemoveTodo={todosCtx.removeTodo.bind(null, item.id)}
+        />
       ))}
     </ul>
   );
