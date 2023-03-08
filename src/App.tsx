@@ -1,3 +1,6 @@
+// Import useState from React
+import { useState } from 'react';
+
 import NewTodo from './components/NewTodo';
 import Todos from './components/Todos';
 import Todo from './models/todo';
@@ -5,13 +8,45 @@ import Todo from './models/todo';
 function App() {
   // Create some dummy Todos Objects/Instances
   // Array of Objects
-  const todos = [new Todo('Learn JavaScript'), new Todo('Learn TypeScript')];
+  // Get rid of those dummy todos and instead we'll call useState here.
+  // const todos = [new Todo('Learn JavaScript'), new Todo('Learn TypeScript')];
+
+  // Managing State in TypeScript
+  // So it's time to for useState because of course we need to manage todos array with state so that when we change it, this component re-renderes and therefore this todos items also re-renders and is updated.
+  // const setTodos: React.Dispatch<React.SetStateAction<undefined>>
+  // To change state to dispatch a state update so to say.
+  // Pass initial vlaue to useState() and that could be an array which is empty.
+  // But here we actually now introduced a subtile problem if we write it like this.
+  // The problem is that we're passing in an empty array as a default value but TypeScript is not able to infer which types of values should be accepted in that array eventually.
+  // That's why if hover on todos we see const todos: never[], never array which basically means it always must be an empty array, no values are allowed in there and that's of course not what we want.
+  // const [todos, setTodos] = useState([]);
+  // To make it clear that we initially have an empty array but that eventually we wanna have an array full of todo items we again need to tell TypeScript somehow.
+  // And we can tell TypeScript because useState function out of the box is a generic function so that we can set the type of data we wanna eventually store in this state.
+  // So we add angle brackets again and now we wanna make it clear that the kind of data managed by the state will be an array of todos. We do this by using our Todo type from that models folder and then square brackets.
+  // That means that this state will manage an array of todos of type Todo which defines the shape of data.
+  // Initially it's an empty array but if we do add items to this array eventually they have be todo items, not strings, not numbers, tood items which have the shape of the todo object class here, we created here and now that's the proper way of defining this state.
+  // And then in addTodoHandler we wanna create our newTodo
+  // const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   // Define function
   // Now the shape of this function is that it shouldn't return anything. So not having a return statement here is fine but it should accept the parameter. It should get the actual todoText which should be a type of string.
+
   const addTodoHandler = (text: string) => {
     // Manipulate array
     // State manage
+
+    // Create new todo by calling newTodo and passing in the todo text as a value to the constructor function to create an object/instance and then we wanna call setTodos and update our state.
+    const newTodo = new Todo(text);
+
+    // setTodos(newTodo);
+
+    // Update state based on previous state we should use function for updating state and in this function we get the previous state and then we need to return our updated state
+    // Concat is a method which we can call that will create a new array, which we sould do because we should not mutate the existing array and we should return a new array which then will be used as a new state by React and this new array contains this newTodo.
+    // That's how we can properly update the state here.
+    setTodos(prevState => {
+      return prevState.concat(newTodo);
+    });
   };
 
   return (
