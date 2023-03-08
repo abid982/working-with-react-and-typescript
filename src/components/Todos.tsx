@@ -80,12 +80,38 @@ import React from 'react';
 //   </ul>;
 // };
 
-const Todos: React.FC<{ items: string[] }> = props => {
+// Expect array of string
+// const Todos: React.FC<{ items: string[] }> = props => {
+//   return (
+//     <ul>
+//       {/* {props.children} */}
+//       {props.items.map(item => (
+//         <li key={item}>{item}</li>
+//       ))}
+//     </ul>
+//   );
+// };
+
+// You can use a class name as a type
+import Todo from './../components/models/todo';
+// Items is an array full of objects that fulfill the definition of this Todo class with an id property of type string and a text with type property
+// Objects created with this class as a constructor function
+// const Todos: React.FC<{ items: string[] }> = props => {
+//   return (
+//     <ul>
+//       {props.items.map(item => (
+//         <li key={item.id}>{item.text}</li>
+//       ))}
+//     </ul>
+//   );
+// };
+
+// Items will be an array of type Todo
+const Todos: React.FC<{ items: Todo[] }> = props => {
   return (
     <ul>
-      {/* {props.children} */}
       {props.items.map(item => (
-        <li key={item}>{item}</li>
+        <li key={item.id}>{item.text}</li>
       ))}
     </ul>
   );
