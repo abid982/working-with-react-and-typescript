@@ -93,7 +93,8 @@ import React from 'react';
 // };
 
 // You can use a class name as a type
-import Todo from './../components/models/todo';
+import Todo from '../models/todo';
+import TodoItem from './TotoItem';
 // Items is an array full of objects that fulfill the definition of this Todo class with an id property of type string and a text with type property
 // Objects created with this class as a constructor function
 // const Todos: React.FC<{ items: string[] }> = props => {
@@ -111,7 +112,12 @@ const Todos: React.FC<{ items: Todo[] }> = props => {
   return (
     <ul>
       {props.items.map(item => (
-        <li key={item.id}>{item.text}</li>
+        // <li key={item.id}>{item.text}</li>
+        // Type '{ key: string; itemText: string; }' is not assignable to type 'IntrinsicAttributes'. Property 'itemText' does not exist on type 'IntrinsicAttributes'.
+        <TodoItem key={item.id} itemText={item.text} />
+        // Suggestion
+        // Type '{ key: string; text: string; }' is not assignable to type 'IntrinsicAttributes & { itemText: string; }'.
+        // <TodoItem key={item.id} text={item.text} />
       ))}
     </ul>
   );

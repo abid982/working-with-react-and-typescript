@@ -1,5 +1,5 @@
 import Todos from './components/Todos';
-import Todo from './components/models/todo';
+import Todo from './models/todo';
 
 function App() {
   // Create some dummy Todos Objects/Instances
